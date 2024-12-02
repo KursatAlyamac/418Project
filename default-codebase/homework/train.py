@@ -5,6 +5,7 @@ import numpy as np
 from utils import load_data
 import dense_transforms
 import matplotlib.pyplot as plt
+import time
 
 def train(args):
     from os import path
@@ -37,6 +38,7 @@ def train(args):
     global_step = 0
     with open('training_losses.txt', 'w') as f:
         for epoch in range(args.num_epoch):
+            epoch_start_time = time.time()
             model.train()
             losses = []
             for img, label in train_data:
@@ -57,10 +59,17 @@ def train(args):
                 
                 losses.append(loss_val.detach().cpu().numpy())
             
+            epoch_time = time.time() - epoch_start_time
             avg_loss = np.mean(losses)
+            
+            status = 'epoch %-3d \t loss = %0.3f \t time = %0.1f sec' % (epoch, avg_loss, epoch_time)
             if train_logger is None:
-                print('epoch %-3d \t loss = %0.3f' % (epoch, avg_loss))
-            f.write('epoch %-3d \t loss = %0.3f\n' % (epoch, avg_loss))
+                print(status)
+            f.write(status + '\n')
+            
+            if train_logger is not None:
+                train_logger.add_scalar('epoch_time', epoch_time, epoch)
+            
             save_model(model)
 
     save_model(model)
@@ -103,22 +112,36 @@ if __name__ == '__main__':
 
     epochs = []
     losses = []
+    times = []
 
     with open('training_losses.txt', 'r') as f:
         for line in f:
             parts = line.strip().split('\t')
             epoch = int(parts[0].split()[-1])
-            loss = float(parts[-1].split()[-1])
+            loss = float(parts[1].split()[-1])
+            time_str = parts[2].split('=')[-1].strip()
+            time = float(time_str.replace('sec', '').strip())
             epochs.append(epoch)
             losses.append(loss)
+            times.append(time)
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(epochs, losses, 'b-', label='Training Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Training Loss Over Time')
-    plt.grid(True)
-    plt.legend()
-    plt.savefig('training_loss_plot.png')
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+
+    ax1.plot(epochs, losses, 'b-', label='Training Loss')
+    ax1.set_xlabel('Epoch')
+    ax1.set_ylabel('Loss')
+    ax1.set_title('Training Loss Over Time')
+    ax1.grid(True)
+    ax1.legend()
+
+    ax2.plot(epochs, times, 'r-', label='Epoch Duration')
+    ax2.set_xlabel('Epoch')
+    ax2.set_ylabel('Time (seconds)')
+    ax2.set_title('Training Time per Epoch')
+    ax2.grid(True)
+    ax2.legend()
+
+    plt.tight_layout()
+    plt.savefig('training_metrics.png')
     plt.show()
 
