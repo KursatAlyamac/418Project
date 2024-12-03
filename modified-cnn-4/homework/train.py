@@ -6,8 +6,6 @@ from utils import load_data
 import dense_transforms
 import matplotlib.pyplot as plt
 import time
-from torch.optim import AdamW
-from torch.optim.lr_scheduler import LinearLR
 
 def train(args):
     import os
@@ -32,9 +30,7 @@ def train(args):
         model.load_state_dict(torch.load(path.join(path.dirname(path.abspath(__file__)), 'planner.th')))
 
     loss = torch.nn.L1Loss()
-    optimizer = AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
-    warmup_epochs = args.num_epoch // 5
-    scheduler = LinearLR(optimizer, start_factor=1.0, end_factor=0.1, total_iters=warmup_epochs)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate)
     
     import inspect
     transform = eval(args.transform, {k: v for k, v in inspect.getmembers(dense_transforms) if inspect.isclass(v)})
@@ -62,9 +58,7 @@ def train(args):
                 loss_val.backward()
                 optimizer.step()
                 global_step += 1
-                if epoch < warmup_epochs:
-                    scheduler.step()
-                    
+                
                 losses.append(loss_val.detach().cpu().numpy())
             
             epoch_time = time.time() - epoch_start_time

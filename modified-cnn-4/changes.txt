@@ -1,0 +1,2 @@
+Key changes:
+Added Dropout2d layers after ReLU activations with decreasing dropout rates (0.2 -> 0.1)
