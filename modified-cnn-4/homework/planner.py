@@ -16,46 +16,49 @@ def spatial_argmax(logit):
 class Planner(torch.nn.Module):
     def __init__(self):
         super().__init__()
-
+        
         layers = []
         
-        # First conv block with more filters and batch normalization
-        layers.append(torch.nn.Conv2d(3, 64, 5, stride=2, padding=2))
-        layers.append(torch.nn.BatchNorm2d(64))
+        # Initial convolution block
+        layers.append(torch.nn.Conv2d(3, 128, 5, stride=2, padding=2))
+        layers.append(torch.nn.BatchNorm2d(128))
         layers.append(torch.nn.ReLU())
-        layers.append(torch.nn.Dropout2d(0.2))
+        layers.append(torch.nn.Dropout2d(0.3))
         layers.append(torch.nn.MaxPool2d(2, stride=2))
         
-        # Second conv block with more filters
+        # Residual block (keeping same channel dimensions)
+        self.conv1 = torch.nn.Conv2d(128, 128, 3, stride=1, padding=1)
+        self.bn1 = torch.nn.BatchNorm2d(128)
+        self.conv2 = torch.nn.Conv2d(128, 128, 3, stride=1, padding=1)
+        self.bn2 = torch.nn.BatchNorm2d(128)
+        
+        # Reduction in channels after residual block
+        layers.append(torch.nn.Conv2d(128, 64, 1, stride=1))
+        
+        # Final layers
         layers.append(torch.nn.Conv2d(64, 32, 3, stride=1, padding=1))
         layers.append(torch.nn.BatchNorm2d(32))
         layers.append(torch.nn.ReLU())
         layers.append(torch.nn.Dropout2d(0.2))
         
-        # Additional conv block for better feature extraction
-        layers.append(torch.nn.Conv2d(32, 16, 3, stride=1, padding=1))
-        layers.append(torch.nn.BatchNorm2d(16))
-        layers.append(torch.nn.ReLU())
-        layers.append(torch.nn.Dropout2d(0.1))
+        layers.append(torch.nn.Conv2d(32, 1, 1, stride=1))
         
-        # Final 1x1 conv to produce heatmap
-        layers.append(torch.nn.Conv2d(16, 1, 1, stride=1))
-
         self._conv = torch.nn.Sequential(*layers)
 
-
     def forward(self, img):
-        """
-        Your code here
-        Predict the aim point in image coordinate, given the supertuxkart image
-        @img: (B,3,96,128)
-        return (B,2)
-        """
-        x = self._conv(img)
-        #print(img.shape)
-        #print(x.shape)
+        # Initial convolutions
+        x = self._conv[0:5](img)
+        
+        # Residual block
+        identity = x
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = self.bn2(self.conv2(x))
+        x = F.relu(x + identity)  # Skip connection
+        
+        # Final layers
+        x = self._conv[5:](x)
+        
         return spatial_argmax(x[:, 0])
-        # return self.classifier(x.mean(dim=[-2, -1]))
 
 
 def save_model(model):

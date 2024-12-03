@@ -1,3 +1,12 @@
 Key changes:
 Added Dropout2d layers after ReLU activations with decreasing dropout rates (0.2 -> 0.1)
 Replaced Adam with AdamW optimizer which has better weight decay handling
+Added residual connections for better gradient flow
+Increased initial filter count (128 instead of 64)
+Added deeper layers with skip connections
+Increased dropout slightly to prevent overfitting
+Added learning rate scheduler to automatically adjust learning rate
+Implemented mixed precision training for faster training
+Slightly lower initial learning rate for better stability
+Increased default epochs to 50
+Increased weight decay slightly for better regularization

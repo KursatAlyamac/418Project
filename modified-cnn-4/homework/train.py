@@ -31,6 +31,8 @@ def train(args):
 
     loss = torch.nn.L1Loss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.01)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3)
+    scaler = torch.amp.GradScaler('cuda')
     
     import inspect
     transform = eval(args.transform, {k: v for k, v in inspect.getmembers(dense_transforms) if inspect.isclass(v)})
@@ -46,23 +48,27 @@ def train(args):
             for img, label in train_data:
                 img, label = img.to(device), label.to(device)
 
-                pred = model(img)
-                loss_val = loss(pred, label)
+                with torch.amp.autocast('cuda'):
+                    pred = model(img)
+                    loss_val = loss(pred, label)
+
+                optimizer.zero_grad()
+                scaler.scale(loss_val).backward()
+                scaler.step(optimizer)
+                scaler.update()
 
                 if train_logger is not None:
                     train_logger.add_scalar('loss', loss_val, global_step)
                     if global_step % 100 == 0:
                         log(train_logger, img, label, pred, global_step)
 
-                optimizer.zero_grad()
-                loss_val.backward()
-                optimizer.step()
                 global_step += 1
                 
                 losses.append(loss_val.detach().cpu().numpy())
             
             epoch_time = time.time() - epoch_start_time
             avg_loss = np.mean(losses)
+            scheduler.step(avg_loss)
             
             status = 'epoch %-3d \t loss = %0.3f \t time = %0.1f sec' % (epoch, avg_loss, epoch_time)
             if train_logger is None:
@@ -103,9 +109,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--log_dir')
     # Put custom arguments here
-    parser.add_argument('-n', '--num_epoch', type=int, default=30)
+    parser.add_argument('-n', '--num_epoch', type=int, default=50)
     parser.add_argument('-w', '--num_workers', type=int, default=4)
-    parser.add_argument('-lr', '--learning_rate', type=float, default=1e-3)
+    parser.add_argument('-lr', '--learning_rate', type=float, default=3e-4)
     parser.add_argument('-c', '--continue_training', action='store_true')
     parser.add_argument('-t', '--transform', default='Compose([ColorJitter(0.2, 0.5, 0.5, 0.2), RandomHorizontalFlip(), ToTensor()])')
 
