@@ -86,13 +86,24 @@ def log(logger, img, label, pred, global_step):
     """
     import matplotlib.pyplot as plt
     import torchvision.transforms.functional as TF
-    fig, ax = plt.subplots(1, 1)
-    ax.imshow(TF.to_pil_image(img[0].cpu()))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+    
+    # Original visualization
+    ax1.imshow(TF.to_pil_image(img[0].cpu()))
     WH2 = np.array([img.size(-1), img.size(-2)])/2
-    ax.add_artist(plt.Circle(WH2*(label[0].cpu().detach().numpy()+1), 2, ec='g', fill=False, lw=1.5))
-    ax.add_artist(plt.Circle(WH2*(pred[0].cpu().detach().numpy()+1), 2, ec='r', fill=False, lw=1.5))
+    ax1.add_artist(plt.Circle(WH2*(label[0].cpu().detach().numpy()+1), 2, ec='g', fill=False, lw=1.5))
+    ax1.add_artist(plt.Circle(WH2*(pred[0].cpu().detach().numpy()+1), 2, ec='r', fill=False, lw=1.5))
+    ax1.set_title('Prediction vs Ground Truth')
+    
+    # Add path planning visualization
+    if hasattr(logger, 'planner'):
+        track_features = logger.planner.get_track_features(img.to(pred.device))
+        curvature = track_features[0, 0:2].cpu().detach().numpy()
+        ax2.bar(['Left Curve', 'Right Curve'], curvature)
+        ax2.set_title('Track Curvature Analysis')
+    
     logger.add_figure('viz', fig, global_step)
-    del ax, fig
+    plt.close(fig)
 
 
 
