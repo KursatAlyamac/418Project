@@ -1,0 +1,5 @@
+Key changes:
+Added Dropout2d layers after ReLU activations with decreasing dropout rates (0.2 -> 0.1)
+Replaced Adam with AdamW optimizer which has better weight decay handling
+Added learning rate warmup using LinearLR scheduler
+The learning rate will start at 1e-4 (10% of base_lr) and linearly increase to 1e-3 over the first 5 epochs. This helps with training stability.
