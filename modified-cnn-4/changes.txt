@@ -1,2 +1,3 @@
 Key changes:
 Added Dropout2d layers after ReLU activations with decreasing dropout rates (0.2 -> 0.1)
+Replaced Adam with AdamW optimizer which has better weight decay handling
