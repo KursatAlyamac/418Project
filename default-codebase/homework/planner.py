@@ -64,6 +64,8 @@ if __name__ == '__main__':
 
 
     def test_planner(args):
+        import os
+        os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
         # Load model
         planner = load_model().eval()
         pytux = PyTux()
