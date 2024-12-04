@@ -23,3 +23,6 @@
 
 ## Summary
 - Struggled with obstacles
+- Ignored this trial. This one seems somewhat okay, but its metrics are off compared to the future trials
+    - Lacks a loss graph. Was implemented in trial 3
+    - Doesn't represent average times. Was also implemented in trial 3
