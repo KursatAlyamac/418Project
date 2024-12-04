@@ -1,15 +1,17 @@
 # SuperTuxKart Planner Experiment
 
-## Settings
-- **Model**: CNN with 3 layers  
+## Planner Settings
+- **Model**: 
+    - `CNN with 3 layers`
+    - `Utilizes MaxPool and AvgPool`
 - **Learning Rate**: `1e-4`  
-- **Epochs**: `200`  
+- **Epochs**: `300`  
 - **Dataset**: `10,000 images`  
-- **Loss**: `0.010`  
-
----
 
 ## Results
+- **Loss**: `0.010`  
+
+## Course times (Best runs)
 - **Zengarden**: `t = 392`  
 - **Lighthouse**: `t = 449`  
 - **Hacienda**: `t = 519`  
@@ -20,4 +22,4 @@
 ---
 
 ## Summary
-The model successfully completed the tracks with consistent performance across various maps. These results demonstrate that the planner generalizes well to different track environments with minimal variation in time.
+- Struggled with obstacles

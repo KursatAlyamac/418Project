@@ -4,34 +4,40 @@ import numpy as np
 
 def control(aim_point, current_vel, steer_gain=6, skid_thresh=0.2, target_vel=30, turn_sensitivity=0.5):
     """
-    Improved controller for SuperTuxKart.
-    - Adjusts speed and steering dynamically based on aim point and current velocity.
-    - Enables drifting on sharp turns and uses nitro for boosts on straight paths.
+    Advanced controller for SuperTuxKart.
+    - Dynamically adjusts steering, acceleration, and braking.
+    - Intelligent use of drifting, nitro, and speed adjustments based on kart dynamics.
     """
     action = pystk.Action()
 
-    # Adjust steering dynamically based on the aim point
+    # Adjust steering dynamically based on aim point
     action.steer = np.clip(steer_gain * aim_point[0], -1, 1)
 
-    # Engage drift for sharp turns
-    action.drift = abs(aim_point[0]) > skid_thresh
+    # Adaptive skid threshold based on velocity
+    adaptive_skid_thresh = skid_thresh + 0.1 * (current_vel / target_vel)
+    action.drift = abs(aim_point[0]) > adaptive_skid_thresh
 
-    # Reduce target velocity for sharper turns
+    # Adaptive target velocity based on turn angle
     dynamic_target_vel = target_vel * (1 - turn_sensitivity * abs(aim_point[0]))
 
-    # Adjust acceleration and braking based on dynamic target velocity
+    # Acceleration and braking logic
     if current_vel < dynamic_target_vel:
         action.acceleration = 1
         action.brake = False
-    else:
+    elif current_vel > dynamic_target_vel + 5:
         action.acceleration = 0
-        action.brake = current_vel > dynamic_target_vel + 5
+        action.brake = True
+    else:
+        action.acceleration = 0.5  # Smooth acceleration for minor adjustments
+        action.brake = False
 
-    # Use nitro on straight paths for speed boost
-    action.nitro = 0.9 * dynamic_target_vel <= current_vel < dynamic_target_vel + 5
+    # Nitro usage: Use nitro only if kart is stable and on a straight path
+    straight_path = abs(aim_point[0]) < 0.1
+    action.nitro = straight_path and dynamic_target_vel * 0.9 <= current_vel <= dynamic_target_vel + 5
 
-    # Debugging: Print control parameters for monitoring and tuning
-    print(f"Aim: {aim_point}, Steer: {action.steer:.2f}, Vel: {current_vel:.2f}, Target Vel: {dynamic_target_vel:.2f}")
+    # Debugging information for fine-tuning
+    print(f"Aim: {aim_point}, Steer: {action.steer:.2f}, Vel: {current_vel:.2f}, "
+          f"Target Vel: {dynamic_target_vel:.2f}, Nitro: {action.nitro}")
 
     return action
 
