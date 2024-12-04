@@ -10,8 +10,9 @@
 
 ## Results
 - **Loss**: `0.003`  
+![alt text](image.png)
 
-## Course times (Best runs)
+## Course times (Averages)
 - **Zengarden**: `t = 404`  
 - **Lighthouse**: `t = 435`  
 - **Hacienda**: `t = 549`  
