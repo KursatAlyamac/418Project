@@ -1,4 +1,4 @@
-# SuperTuxKart Trial 7
+# SuperTuxKart Trial 6
 
 Num epochs - 150
 Powerups 3
