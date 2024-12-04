@@ -1,0 +1,3 @@
+Key Changes:
+Increased Epochs: The default number of training epochs has been increased to 50 to allow the model more time to learn.
+Enhanced CNN Architecture: Additional convolutional layers and residual blocks have been added to improve feature extraction and processing.
