@@ -10,6 +10,7 @@
 
 ## Results
 - **Loss**: `0.011`  
+![alt text](image.png)
 
 ## Course times (Averages)
 - **Zengarden**: `t = 410`  
