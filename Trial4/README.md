@@ -22,12 +22,13 @@
 ---
 
 ## Summary
+- Used trial 1 Planner
 - All the courses were completed in their allocated time
 - Still struggled with pits and cliffs show on Snowtuxpeak
 - Struggled with barrels and bananas on Cornfield Crossing
 - Made key changes to controller
     - Adaptive drift and velocity, protections versus nitro steering cart off course
     - Seemed to work better for most maps 
-
+- Look into reworking CNN
 
 

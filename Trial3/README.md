@@ -24,5 +24,7 @@
 ---
 
 ## Summary
+- Increased images to see if large CNN just needed larger dataset
 - Struggled about the same as previous one, seems to be a problem with cnn and not dataset, extremely struggled with snowtux
+- Revert CNN next trial, test old CNN with large dataset
 

@@ -19,9 +19,13 @@
 - **Hacienda**: `t = 578`  
 - **Snowtuxpeak**: `t = 823`  
 - **Cornfield Crossing**: `t = 762`  
-- **Scotland**: `t = 698`  
+- **Scotland**: `t = 1000`  
 
 ---
 
 ## Summary
+- Made changes to CNN in order to try for better results
+- Showed regression
 - Struggled with obstacles
+- For future, increase image size
+- This run, we excluded running scotland from producing for our drive data to use it as a test case, resulted in Scotland never being completed

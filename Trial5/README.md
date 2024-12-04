@@ -22,8 +22,9 @@
 ---
 
 ## Summary
+- Expanded Trial 4 CNN and only added more CNN layers with pooling methods
+- Utilized the new controller used in Trial 4
 - All the courses were completed in their allocated time
 - Still struggled with pits and cliffs show on Snowtuxpeak
 - Struggled with barrels and bananas on Cornfield Crossing
 - Achieved our best loss and consistent results so far
-- Utilized the new controller used in Trial 4
