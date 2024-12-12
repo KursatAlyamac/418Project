@@ -1,0 +1,17 @@
+Key improvements made:
+
+Controller:
+Added adaptive steering gain that increases with speed and turn sharpness
+More sophisticated drift logic considering both speed and turn angle
+Progressive braking based on speed excess
+Strategic nitro usage with better conditions
+Improved turn speed adjustment
+
+Training:
+Added AdamW optimizer with weight decay for better regularization
+Implemented OneCycleLR scheduler for faster convergence
+Added gradient clipping to prevent exploding gradients
+Dynamic loss weighting for powerup detection
+Best model saving based on average loss
+Enhanced logging with separate loss components
+CUDA optimizations with cudnn.benchmark

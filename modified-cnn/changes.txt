@@ -1,0 +1,11 @@
+Key improvements made:
+Increased initial filters from 16 to 32 to capture more features
+Added average pooling after first conv layer to reduce spatial dimensions while maintaining important features
+Added an intermediate conv layer with 3x3 kernel to better process spatial relationships
+Kept the final 1x1 conv layer to produce the heatmap
+
+The changes:
+Use more filters initially (32 instead of 16) to capture richer features
+Added AvgPool2d to help with spatial dimension reduction and feature aggregation
+Added an intermediate conv layer with 3x3 kernel for better feature processing
+Maintained small parameter count while improving network capacity

@@ -1,0 +1,36 @@
+These changes add:
+Learning rate scheduling that reduces the learning rate when training plateaus
+Action smoothing to prevent jerky steering
+Enhanced drift control with recovery behavior
+Dynamic steering gain that adapts to speed and turn sharpness
+Velocity control that adjusts for turns
+Smart nitro usage with recovery periods
+Progressive acceleration and braking
+L1 regularization during training
+The controller now maintains state between calls, allowing it to implement smoother transitions and recovery behaviors. The learning rate scheduler will help training converge to better solutions by reducing the learning rate when progress stalls.
+
+
+Modifications after failed test:
+
+Key improvements to address understeer:
+
+Enhanced Steering Response:
+Increased base steering gain from 6 to 8
+Reduced smoothing factor from 0.3 to 0.2 for more responsive steering
+More aggressive dynamic steering gain scaling with turn sharpness
+
+Better Turn Speed Control:
+More aggressive speed reduction in turns (70% reduction vs previous 50%)
+Earlier braking when approaching sharp turns
+Reduced acceleration during turns
+
+Improved Drift Behavior:
+Lower threshold for initiating drifts
+Added drift cooldown to prevent rapid drift toggling
+Less aggressive acceleration reduction during drifts
+Shorter recovery period after drifts
+
+Turn Detection and Response:
+More sensitive turn detection
+More aggressive braking response to sharp turns
+Conservative nitro usage in turns

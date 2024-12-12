@@ -1,0 +1,9 @@
+Key improvements:
+Added batch normalization layers to stabilize training
+Increased network capacity with an additional conv layer
+Added dropout for regularization
+Implemented learning rate scheduling
+Combined L1 and MSE loss for better convergence
+Added noise augmentation during training
+Enhanced the controller's steering response
+Increased default epochs to 50
