@@ -1,0 +1,5 @@
+Key changes made:
+Added a new obstacle avoidance head with similar architecture to the powerup detection head
+The obstacle head produces a heatmap of potential obstacles (bananas, etc.)
+Combined the path planning with obstacle avoidance by multiplying the path logits with an inverse obstacle probability map
+This causes the network to reduce path probabilities in areas where obstacles are detected

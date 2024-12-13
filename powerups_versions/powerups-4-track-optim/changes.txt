@@ -1,0 +1,16 @@
+The key changes made are:
+
+Added a TrackOptimizer class that:
+Samples and interpolates track points for smoother path planning
+Finds optimal trajectory points ahead of the kart
+Calculates target steering points considering track curvature
+
+Modified the Planner to:
+Initialize track optimizer
+Blend CNN predictions with track-based optimization when world state is available
+Fall back to pure CNN predictions when no world state is available
+
+The track optimizer helps by:
+Providing a more stable and predictable racing line
+Considering track width and curvature for better cornering
+Allowing look-ahead planning for smoother trajectories

@@ -1,0 +1,5 @@
+These changes add:
+A new RacingLinePredictor module that learns optimal racing lines through the track
+Integration of racing line features with the path planning head
+Additional loss terms for racing line prediction during training
+The racing line predictor uses a series of convolutional layers to extract racing line features that are combined with the path planning features

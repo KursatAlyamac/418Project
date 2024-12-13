@@ -1,6 +1,0 @@
-epoch 0   	 loss = 0.192 	 time = 59.3 sec
-epoch 1   	 loss = 0.172 	 time = 59.4 sec
-epoch 2   	 loss = 0.164 	 time = 59.3 sec
-epoch 3   	 loss = 0.159 	 time = 59.4 sec
-epoch 4   	 loss = 0.158 	 time = 59.2 sec
-epoch 5   	 loss = 0.161 	 time = 59.2 sec

@@ -1,5 +1,0 @@
-Key Changes:
-Increased Filters: The number of filters in the convolutional layers has been increased to allow the model to capture more complex features.
-Racing Line Integration: The racing line features are integrated with the aim point to adjust it dynamically.
-Deeper Architecture: The model now has more layers and residual blocks to improve its capacity to learn from data.
-Activation Function: Changed from ReLU to LeakyReLU, which can help with the dying ReLU problem and provide better gradient flow.
