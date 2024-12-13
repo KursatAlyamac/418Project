@@ -1,11 +1,42 @@
-# SuperTuxKart Project 
+# SuperTuxKart Project
 
- This is our repository containing all of the code we have worked on to try and get the best results possible in this program. We have folders that each contain different developments for our code. Our folders are named based on the advances that each one made. 
+Welcome to our SuperTuxKart project repository! This repository contains all the code and experiments we have worked on to achieve the best possible results in SuperTuxKart. Each folder represents a specific phase or focus area in the development process, with names reflecting the progress made.
 
- default-codebase: The original codebase provided with our personal controller written
- early_trials: Very first trials made when starting the project. Changes range from image amount inputs, CNN layers, controller changes, and hyperparameterization
- modified_cnns: Successful changes using dropout layers, pooling, etc.
- advanced_pathing: Attempts to try and create the best possible pathing
- powerups_versions: Obstacle detection, racing line prediction, enhanced neural network
- cart_ddpg: A RL implementation for controller acceleration utilizing double q learning
- best_results: The overall best results are stored here. There are two trials, one with more epochs and one with less epochs. Utilizes powerups, modified_cnn, and advanced_pathing codes to produce the best results
+## Repository Structure
+
+### `default-codebase`
+Contains the original codebase provided with our custom controller implementation.
+
+### `early_trials`
+Initial experiments and developments, including:
+- Adjustments to image inputs
+- Modifications to CNN layers
+- Changes to the controller logic
+- Hyperparameter tuning
+
+### `modified_cnns`
+Enhancements made to the CNN architecture, such as:
+- Adding dropout layers
+- Introducing pooling layers
+- Other architectural modifications
+
+### `advanced_pathing`
+Focused on creating optimal pathing strategies for the kart.
+
+### `powerups_versions`
+Features implemented in this folder include:
+- Obstacle detection
+- Racing line prediction
+- Enhanced neural network functionalities
+
+### `cart_ddpg`
+Reinforcement learning implementation for controller acceleration using Double Q-Learning (DDPG).
+
+### `best_results`
+Contains the overall best-performing models and configurations:
+- Two trials are included: one with more epochs and another with fewer epochs.
+- Combines features from `powerups_versions`, `modified_cnns`, and `advanced_pathing` for optimal performance.
+
+---
+
+Feel free to explore the folders and review the progression of our work. Each directory provides insight into the iterations and improvements we have made throughout the project.
