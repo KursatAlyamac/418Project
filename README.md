@@ -34,9 +34,9 @@ Reinforcement learning implementation for controller acceleration using Double Q
 
 ### `best_results`
 Contains the overall best-performing models and configurations:
-- Two trials are included: one with more epochs and another with fewer epochs.
-- Combines features from `powerups_versions`, `modified_cnns`, and `advanced_pathing` for optimal performance.
+- Two trials are included: one with more epochs and another with fewer epochs
+- Combines features from `powerups_versions`, `modified_cnns`, and `advanced_pathing` for optimal performance
 
 ---
 
-Feel free to explore the folders and review the progression of our work. Each directory provides insight into the iterations and improvements we have made throughout the project.
+Feel free to explore the folders and review the progression of our work. Each directory provides insight into the iterations and improvements we have made throughout the project
